@@ -90,12 +90,13 @@ public class VilleFranceDAO {
 		return villes;
 	}
 	
-	public ArrayList<VilleFrance> trouver(String codePostal) {
+	public ArrayList<VilleFrance> trouver(String filtre,String valeur) {
 		ArrayList <VilleFrance> villes = null;
 
 		try {
 			Connection conn = BddConnection.getInstance();
-			String query = "SELECT * FROM ville_france WHERE Code_postal=" + codePostal;
+			String query = "SELECT * FROM ville_france WHERE " + filtre +"=" + valeur;
+			System.out.println(query);
 
 			PreparedStatement prepare = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
@@ -117,7 +118,7 @@ public class VilleFranceDAO {
 				vf.setLigne_5(res.getString("Ligne_5"));
 				vf.setLatitude(res.getString("Latitude"));
 				vf.setLongitude(res.getString("Longitude"));
-				
+				System.out.println(vf.getNom_commune());
 
 				villes.add(vf);
 				
@@ -132,6 +133,8 @@ public class VilleFranceDAO {
 		}
 		return villes;
 	}
+	
+	
 	
 }
 	
