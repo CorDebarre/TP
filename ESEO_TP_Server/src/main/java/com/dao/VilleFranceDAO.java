@@ -134,6 +134,52 @@ public class VilleFranceDAO {
 		return villes;
 	}
 	
+	public VilleFrance modifier(VilleFrance ville, String code_commune) {
+		
+
+		try {
+			Connection conn = BddConnection.getInstance();
+			String update = "UPDATE ville_france SET Code_commune_INSEE='"+ville.getCode_commune_INSEE()+ "', Code_postal='"+ville.getCode_postal()+ "', Nom_commune='"+ville.getNom_commune()+"', Libelle_acheminement='"+ville.getLibelle_acheminement()+"', Ligne_5='"+ville.getLigne_5()+"', Latitude='"+ville.getLatitude()+"', Longitude='"+ville.getLongitude()+"' WHERE Code_commune_INSEE='"+code_commune+"'" ;
+			System.out.println(update);
+
+			PreparedStatement prepare = conn.prepareStatement(update, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+
+			int res = 0;
+			res=prepare.executeUpdate();
+			
+			prepare.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return ville;
+	}
+	
+public String supprimer(String code_commune) {
+		
+
+		try {
+			Connection conn = BddConnection.getInstance();
+			String update = "DELETE FROM ville_france WHERE Code_commune_INSEE='"+code_commune +"'";
+			System.out.println(update);
+
+			PreparedStatement prepare = conn.prepareStatement(update, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+
+			int res = 0;
+			res=prepare.executeUpdate();
+			
+			prepare.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return "La ville a été supprimée";
+	}
+	
 	
 	
 }
